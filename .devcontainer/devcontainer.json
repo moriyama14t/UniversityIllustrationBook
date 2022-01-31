@@ -1,0 +1,16 @@
+{
+    "name": "BackEnd",
+    "dockerComposeFile": "../Docker/docker-compose.yml",
+    "service": "java",
+    "workspaceFolder": "/app",
+    "settings": {
+    "terminal.integrated.defaultProfile.linux": "bash"
+},
+"extensions": [
+  "vscjava.vscode-java-pack",
+  "pivotal.vscode-boot-dev-pack",
+  "gabrielbb.vscode-lombok",
+  "richardwillis.vscode-gradle-extension-pack",
+  "natqe.reload",
+]
+}

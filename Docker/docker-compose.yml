@@ -1,0 +1,44 @@
+version: "3"
+
+services:
+  mysql:
+        image: mysql:8.0.28
+        volumes: 
+            - /var/lib/mysql
+        ports: 
+            - 3306:3306
+        environment: 
+            MYSQL_ROOT_PASSWORD: university
+            MYSQL_DATABASE: university
+            MYSQL_USER: university
+            MYSQL_PASSWORD: university
+        restart: always
+        container_name: Mysql
+        tty: true
+
+  backEnd:
+    image: openjdk:17
+    container_name: BackEnd
+    tty: true #ttyとは、擬似端末(キーボードによる入力)をコンテナに結びつける設定
+    working_dir: /app
+    volumes:
+      - ../BackEnd:/app # Spring Bootのプロジェクト
+    ports: 
+      - 8080:8080 # 通常実行
+      - 5050:5050 # デバッグ用
+    depends_on:
+      - mysql # 「mysql」の後で起動
+
+  app:
+    build: ../FrontEnd
+    ports:
+      - "3000:3000"
+    working_dir: "/src"
+    volumes:
+      - "../FrontEnd:/src"
+      - node_modules_volume:/src/node_modules
+    tty: true
+    environment:
+    - CHOKIDAR_USEPOLLING=true
+volumes:
+  node_modules_volume:
