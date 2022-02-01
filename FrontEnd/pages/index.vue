@@ -26,7 +26,7 @@
                     <v-list-item-title>{{university.name}}</v-list-item-title>
                 </v-list-item-content>
                 <v-list-item-content>
-                    <v-list-item-title>{{university.name}}</v-list-item-title>
+                    <v-list-item-title>{{university.furikana}}</v-list-item-title>
                 </v-list-item-content>
                 <v-list-item-action>
                     <v-btn @click="deleteTask(university.id)">
@@ -74,18 +74,13 @@ export default {
     methods: {
 
         async addUniversity(addUniversityInfo) {
-            console.log(addUniversityInfo);
-            console.log({
-                name: addUniversityInfo.name,
-                furikana: addUniversityInfo.furikana
-            });
 
             const universityInfoObject={
                 name: addUniversityInfo.name,
                 furikana: addUniversityInfo.furikana
             };
 
-          await axios.post('api/add',universityInfoObject,
+        await axios.post('api/add',universityInfoObject,
         {headers:{ 
             'Content-Type': 'application/json'}
         })
