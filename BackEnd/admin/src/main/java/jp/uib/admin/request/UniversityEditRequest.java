@@ -1,13 +1,11 @@
-package jp.uib.admin.model;
+package jp.uib.admin.request;
 
-import lombok.Builder;
 import lombok.Data;
 
 @Data
-@Builder
-public class University {
+public class UniversityEditRequest {
 
-    /** ID */
+    /** 大学名 */
     private int id;
 
     /** 大学名 */
@@ -15,5 +13,4 @@ public class University {
 
     /** フリガナ */
     private String furikana;
-
 }

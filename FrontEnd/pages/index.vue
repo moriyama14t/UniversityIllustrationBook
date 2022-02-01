@@ -8,16 +8,15 @@
             <v-icon>mdi-magnify</v-icon>
         </v-btn>
         <v-btn icon>
-
             <v-icon>mdi-checkbox-marked-circle</v-icon>
         </v-btn>
     </v-toolbar>
 
-    <v-list v-for="university in universities" :key="university.id" cols="12">
+    <v-list v-for="university in universities"   :key="university.id"  cols="12"  >
         <v-list-item-group>
             <v-list-item>
                 <v-list-item-action>
-                    <v-checkbox :input-value=university.done @click="done(university.id)"></v-checkbox>
+                    <v-radio  :key="university.id" :value="university"  @click="select(university)"></v-radio>
                 </v-list-item-action>
                 <v-list-item-content>
                     <v-list-item-title>{{university.id}}</v-list-item-title>
@@ -29,7 +28,7 @@
                     <v-list-item-title>{{university.furikana}}</v-list-item-title>
                 </v-list-item-content>
                 <v-list-item-action>
-                    <v-btn @click="deleteTask(university.id)">
+                    <v-btn @click="deleteUniversity(university.id)">
                         <v-icon>
                             mdi-backspace
                         </v-icon>
@@ -38,13 +37,28 @@
             </v-list-item>
         </v-list-item-group>
     </v-list>
-    <v-col cols="12" class="d-flex">
+    <v-col cols="12" class="d-flex" v-if="!selectUniversity">
+    大学追加
         <v-list-item-content>
             <v-text-field v-model="universityInfo.name" label="大学名" required></v-text-field>
             <v-text-field v-model=" universityInfo.furikana" label="フリガナ" required></v-text-field>
         </v-list-item-content>
         <v-list-item-action>
             <v-btn @click.stop="addUniversity(universityInfo)">
+                <v-icon>
+                    mdi-plus-circle
+                </v-icon>
+            </v-btn>
+        </v-list-item-action>
+    </v-col>
+    <v-col cols="12" class="d-flex" v-if="selectUniversity">
+    大学編集
+        <v-list-item-content>
+            <v-text-field v-model="selectUniversity.name" required></v-text-field>
+            <v-text-field v-model=" selectUniversity.furikana" required></v-text-field>
+        </v-list-item-content>
+        <v-list-item-action>
+            <v-btn @click="editUniversity(selectUniversity)">
                 <v-icon>
                     mdi-plus-circle
                 </v-icon>
@@ -63,18 +77,19 @@ export default {
         posts: [],
         universities: [],
         universityInfo: {},
+        isCkecked:false,
+        selectUniversity:null,
     }),
     // eslint-disable-next-line object-shorthand
     created: async function () {
-        const a = await axios.get('api/')
+        const university = await axios.get('api/')
             // eslint-disable-next-line no-return-assign
             .then((response) => this.posts = response)
-        this.universities = a.data;
+        this.universities = university.data;
     },
     methods: {
 
         async addUniversity(addUniversityInfo) {
-
             const universityInfoObject={
                 name: addUniversityInfo.name,
                 furikana: addUniversityInfo.furikana
@@ -87,12 +102,42 @@ export default {
                 .then(function (response) {
                     console.log(response.data);
                 })
-
-                        const a = await axios.get('api/')
+        const university = await axios.get('api/')
             // eslint-disable-next-line no-return-assign
             .then((response) => this.posts = response)
-        this.universities = a.data;
+        this.universities = university.data;
         this.universityInfo={};
+        },
+        async deleteUniversity(universityId){
+            await axios.delete('api/delete/'+universityId)
+            // eslint-disable-next-line no-return-assign
+            .then((response) => this.posts = response);
+
+            this.universities= this.universities.filter(university=>university.id!==universityId);
+        },
+
+        select(university){
+            this.selectUniversity=university;
+        },
+        async editUniversity(editUniversityInfo) {
+            const universityInfoObject={
+                id:editUniversityInfo.id,
+                name: editUniversityInfo.name,
+                furikana: editUniversityInfo.furikana
+            };
+
+        await axios.post('api/edit',universityInfoObject,
+        {headers:{ 
+            'Content-Type': 'application/json'}
+        })
+                .then(function (response) {
+                    console.log(response.data);
+                })
+        const university = await axios.get('api/')
+            // eslint-disable-next-line no-return-assign
+            .then((response) => this.posts = response)
+        this.universities = university.data;
+        this.editUniversityInfo=null;
         },
     }
 }
