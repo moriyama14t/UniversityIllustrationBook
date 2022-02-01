@@ -27,7 +27,7 @@
 
 1. フロントエンド
     - 言語:JavaScript
-    - SPA:Nuxt.js(v12以上)
+    - SPA:Nuxt.js
 
 1. スマホ
     - React Native
