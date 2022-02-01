@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import jp.uib.admin.model.University;
 import jp.uib.admin.repository.UniversityRepository;
+import jp.uib.admin.request.UniversityEditRequest;
 import jp.uib.admin.request.UniversityRequest;
 
 @Service
@@ -38,20 +39,28 @@ public class UniversityService {
         return universityInfoOptional.get();
     }
 
-    public University add(UniversityRequest universityInfoRequest) {
+    public void add(UniversityRequest universityInfoRequest) {
 
         University university = University.builder()
                 .name(universityInfoRequest.getName())
                 .furikana(universityInfoRequest.getFurikana())
                 .build();
+        universityRepository.create(university);
 
-        System.out.println(university);
+    }
 
-        Integer universityInfonumber = universityRepository.create(university);
+    public void delete(int id) {
+        universityRepository.delete(id);
+    }
 
-        System.out.println(universityInfonumber);
+    public void edit(UniversityEditRequest universityEditRequest) {
+        University university = University.builder()
+                .id(universityEditRequest.getId())
+                .name(universityEditRequest.getName())
+                .furikana(universityEditRequest.getFurikana())
+                .build();
 
-        return getPost(universityInfonumber);
+        universityRepository.edit(university);
     }
 
 }
