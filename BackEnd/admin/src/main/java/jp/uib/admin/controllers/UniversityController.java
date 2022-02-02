@@ -23,7 +23,7 @@ public class UniversityController {
     UniversityService universityService;
 
     @GetMapping("/")
-    List<University> getAllPosts() {
+    public List<University> getAllPosts() {
         return universityService.getAllPosts();
     }
 
