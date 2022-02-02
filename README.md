@@ -23,7 +23,7 @@
 1. バックエンド
     - 言語:Java(v17以上)
     - FW:SpringBoot(v2.6以上)
-    - DB:MySql(v6以上)
+    - DB:MySql(v8以上)
 
 1. フロントエンド
     - 言語:JavaScript
