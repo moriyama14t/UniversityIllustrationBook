@@ -95,7 +95,7 @@ export default {
                 furikana: addUniversityInfo.furikana
             };
 
-        await axios.post('api/add',universityInfoObject,
+        await axios.post('api/',universityInfoObject,
         {headers:{ 
             'Content-Type': 'application/json'}
         })
@@ -109,7 +109,7 @@ export default {
         this.universityInfo={};
         },
         async deleteUniversity(universityId){
-            await axios.delete('api/delete/'+universityId)
+            await axios.delete('api/'+universityId)
             // eslint-disable-next-line no-return-assign
             .then((response) => this.posts = response);
 
@@ -126,7 +126,7 @@ export default {
                 furikana: editUniversityInfo.furikana
             };
 
-        await axios.post('api/edit',universityInfoObject,
+        await axios.put('api/',universityInfoObject,
         {headers:{ 
             'Content-Type': 'application/json'}
         })
