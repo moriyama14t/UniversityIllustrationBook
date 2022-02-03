@@ -18,13 +18,11 @@ public class CatTest {
     @BeforeEach
     public void setUpSteams() {
         System.setOut(new PrintStream(outContent));
-        System.out.println(1 + outContent.toString());
     }
 
     @AfterEach
     public void cleanUpSteams() {
         System.setOut(System.out);
-        System.out.println(2 + outContent.toString());
     }
 
     @Test
@@ -38,12 +36,11 @@ public class CatTest {
         c.oiling();
 
         // 期待値を設定
-        final String expected = "テスト車は、ガソリンスタンドで給油をした" + System.lineSeparator();
+        final String expected = "テスト車はガソリンスタンドで給油をした" + System.lineSeparator();
 
         // 実際の値を取得
         final String actual = outContent.toString();
 
-        System.out.println(3 + expected);
         assertEquals(expected, actual);
 
     }
@@ -72,8 +69,6 @@ public class CatTest {
 
         // 実際の値を取得
         final String actual = outContent.toString();
-
-        System.out.println(4 + expected);
 
         assertEquals(expected, actual);
 

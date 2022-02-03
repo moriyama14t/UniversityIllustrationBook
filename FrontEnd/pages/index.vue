@@ -95,7 +95,7 @@ export default {
                 furikana: addUniversityInfo.furikana
             };
 
-        await axios.post('api/add',universityInfoObject,
+        await axios.post('api/',universityInfoObject,
         {headers:{ 
             'Content-Type': 'application/json'}
         })

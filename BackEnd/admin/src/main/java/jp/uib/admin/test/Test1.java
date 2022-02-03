@@ -11,7 +11,7 @@ public class Test1 {
     // 給油
     public void oiling() {
         this.fuel = 80;
-        System.out.println(this.carName + "は、ガソリンスタンドで給油をした");
+        System.out.print(this.carName + "はガソリンスタンドで給油をした");
     }
 
     // 走行距離
