@@ -1,7 +1,6 @@
 package jp.uib.admin.Service;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,22 +19,14 @@ public class UniversityService {
     @Autowired
     UniversityRepository universityRepository;
 
-    public List<University> getAllPosts() {
+    public List<University> getAllUniversities() {
 
         return universityRepository.findAll();
     }
 
-    public University getPost(int id) {
+    public University getUniversity(int id) {
 
         Optional<University> universityInfoOptional = universityRepository.findById(id);
-
-        if (Objects.isNull(universityInfoOptional)) {
-            try {
-                throw new Exception("データがありません");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
         return universityInfoOptional.get();
     }
 
